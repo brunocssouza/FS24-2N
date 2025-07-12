@@ -1,0 +1,71 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema biblioteca
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema biblioteca
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `biblioteca` DEFAULT CHARACTER SET utf8 ;
+USE `biblioteca` ;
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`Aluno`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`Aluno` (
+  `id_aluno` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `idade` VARCHAR(45) NOT NULL,
+  `telefone` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_aluno`),
+  UNIQUE INDEX `telefone_UNIQUE` (`telefone` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`Livro`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`Livro` (
+  `id_livro` INT NOT NULL AUTO_INCREMENT,
+  `isbn` VARCHAR(45) NOT NULL,
+  `titulo` VARCHAR(45) NOT NULL,
+  `autor` VARCHAR(45) NOT NULL,
+  `genero` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_livro`),
+  UNIQUE INDEX `isbn_UNIQUE` (`isbn` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `biblioteca`.`Emprestimo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `biblioteca`.`Emprestimo` (
+  `id_emprestimo` INT NOT NULL,
+  `data_emprestimo` VARCHAR(45) NOT NULL,
+  `data_devolucao` VARCHAR(45) NOT NULL,
+  `Aluno_idAluno` INT NOT NULL,
+  `Livro_id_livro` INT NOT NULL,
+  PRIMARY KEY (`id_emprestimo`, `Aluno_idAluno`, `Livro_id_livro`),
+  INDEX `fk_Emprestimo_Aluno_idx` (`Aluno_idAluno` ASC) VISIBLE,
+  INDEX `fk_Emprestimo_Livro1_idx` (`Livro_id_livro` ASC) VISIBLE,
+  CONSTRAINT `fk_Emprestimo_Aluno`
+    FOREIGN KEY (`Aluno_idAluno`)
+    REFERENCES `biblioteca`.`Aluno` (`id_aluno`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Emprestimo_Livro1`
+    FOREIGN KEY (`Livro_id_livro`)
+    REFERENCES `biblioteca`.`Livro` (`id_livro`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
