@@ -7,9 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class ConexaoDB {
-    private static final String URL = "jdbc:mysql://localhost:5432/JurassicWorld";
+    private static final String URL = "jdbc:mysql://localhost:3306/jurassicworld";
     private static final String USUARIO = "root";
-    private static final String SENHA = "postgres";
+    private static final String SENHA = "root";
 
     public static Connection conectar() {
         Connection conexao = null;
